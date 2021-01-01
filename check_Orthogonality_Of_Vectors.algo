@@ -1,0 +1,55 @@
+FUNCTION dot_product(V: ARRAY_OF INTEGER[3][n],v1:INTEGER,v2:INTEGER ) : INTEGER
+VAR
+    ps, i: INTEGER:=0;
+BEGIN  
+     FOR i FROM 0 TO 2 DO  
+     ps := ps + V[i][v1]*V[i][v2] ;
+     END_FOR  
+    RETURN ps ;
+END 
+
+FUNCTION read_number_Of_Vectors () : INTEGER
+VAR
+    n:INTEGER;
+BEGIN
+    REPEAT
+        Write (Enter a pair number of vectors : );
+        Read (n);
+    UNTIL (n>=2 AND n%2=0) 
+    return n;
+END
+
+PROCEDURE read_array (n:INTEGER, VAR T: ARRAY_OF INTEGER [3][n])
+VAR
+    j: INTEGER;
+BEGIN
+    FOR j FROM 0 TO n-1 DO 
+         Write (Enter the coordinate x of the vector V'j': );
+         Read (T[0][j]);
+
+         Write (Enter the coordinate y of the vector V'j': );
+         Read (T[1][j]);
+
+         Write (Enter the coordinate z of the vector V'j': );
+         Read (T[2][j]);     
+    END_FOR
+END
+
+ALGORITHM check_Orthogonality_Of_Vectors
+VAR
+    n:INTEGER;//declaring the number of vectors to verefy their orthogonality.
+    V: ARRAY_OF INTEGER [3][n]; //declaring an array that contains all the vectors selected by the user (each vector contain three coordinates x ,y and z)
+    i,j: INTEGER:=0;
+BEGIN
+    n:=read_number_Of_Vectors (); //the number of vectors n must be positive and pair. 
+    
+    read_array (n , V);//to fill the array V with the x, y, z coordinates of the n vectors (Each colomn of the Array V contain a vector with three coordinates)
+
+    FOR i FROM 0 TO n-2 DO 
+      FOR j FROM i+1 TO n-1 DO  //to verify the dot product of all vectors in the array V if it is null or not.      
+        IF ( dot_product (V,i,j) = 0) THEN 
+            Write( V'i' and V'j' are orthogonal ); 
+        END_IF
+      END_FOR 
+    END_FOR 
+END
